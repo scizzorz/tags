@@ -8,24 +8,24 @@ from datetime import datetime
 class Tag:
   DATE_FMT = '%a  %m/%d/%y  %I:%M%p'
 
-  def __init__(self, string=None, tag=None, timestamp=None):
+  def __init__(self, string=None, label=None, timestamp=None):
     if string is not None:
       temp = string.strip().split(maxsplit=1)
       self.datetime = datetime.fromtimestamp(int(temp[0]))
-      self.tag = temp[1]
+      self.label = temp[1]
 
-    elif tag is not None:
-      self.tag = tag
+    elif label is not None:
+      self.label = label
       if timestamp is None:
         self.datetime = datetime.utcnow()
       else:
         self.datetime = timestamp
 
   def __str__(self):
-    return '{} {}'.format(int(self.datetime.timestamp()), self.tag)
+    return '{} {}'.format(int(self.datetime.timestamp()), self.label)
 
   def __repr__(self):
-    return '{}    {}'.format(self.datetime.strftime(self.DATE_FMT), self.tag)
+    return '{}    {}'.format(self.datetime.strftime(self.DATE_FMT), self.label)
 
 
 def main(args):
@@ -37,11 +37,11 @@ def main(args):
     tags = []
 
   # add tags from arguments
-  for tag in args.tags:
-    tags.append(Tag(tag=tag))
+  for label in args.tags:
+    tags.append(Tag(label=label))
 
   # filter based on the search (-s)
-  display_tags = filter(lambda x: args.search in x.tag, tags)
+  display_tags = filter(lambda x: args.search in x.label, tags)
 
   # filter based on the number (-n)
   if args.search != 0:
