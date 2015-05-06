@@ -10,9 +10,9 @@ class Tag:
 
   def __init__(self, string=None, tag=None, timestamp=None):
     if string is not None:
-      temp = string.split()
-      self.tag = temp[0]
-      self.datetime = datetime.fromtimestamp(int(temp[1]))
+      temp = string.strip().split(maxsplit=1)
+      self.datetime = datetime.fromtimestamp(int(temp[0]))
+      self.tag = temp[1]
 
     elif tag is not None:
       self.tag = tag
@@ -22,7 +22,7 @@ class Tag:
         self.datetime = timestamp
 
   def __str__(self):
-    return '{} {}'.format(self.tag, int(self.datetime.timestamp()))
+    return '{} {}'.format(int(self.datetime.timestamp()), self.tag)
 
   def __repr__(self):
     return '{}    {}'.format(self.datetime.strftime(self.DATE_FMT), self.tag)
